@@ -78,7 +78,10 @@ var excelSheetFromDataSet = function excelSheetFromDataSet(dataSet) {
             for (var C = 0; C != data[R].length; ++C) {
                 var cellRef = _xlsx2.default.utils.encode_cell({ c: C + xSteps, r: rowCount });
                 fixRange(range, R, C, rowCount, xSteps, ySteps);
-                getCell(data[R][C], cellRef, ws);
+
+                if (data[R][C].value !== null) {
+                    getCell(data[R][C], cellRef, ws);
+                }
             }
         }
     });
@@ -86,6 +89,9 @@ var excelSheetFromDataSet = function excelSheetFromDataSet(dataSet) {
     if (range.s.c < 10000000) {
         ws['!ref'] = _xlsx2.default.utils.encode_range(range);
     }
+
+    // TODO: This should be in the columns, not here
+    ws['!cols'] = [{wch: 18},{wch: 25},{wch: 21.14},{wch: 12.71},{wch: 12.71},{wch: 13.57},{wch: 12},{wch: 12.29}];
 
     return ws;
 };
@@ -117,6 +123,7 @@ function getCell(v, cellRef, ws) {
     } else if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') {
         cell.v = v.value;
         cell.s = v.style;
+        if (typeof v.value === 'number') cell.t = 'n';
     } else {
         cell.v = v;
         cell.t = 's';
@@ -189,6 +196,9 @@ var excelSheetFromAoA = function excelSheetFromAoA(data) {
     if (range.s.c < 10000000) {
         ws['!ref'] = _xlsx2.default.utils.encode_range(range);
     }
+
+    // TODO: This should be in the columns, not here
+    ws['!cols'] = [{wch: 18},{wch: 25},{wch: 21.14},{wch: 12.71},{wch: 12.71},{wch: 13.57},{wch: 12},{wch: 12.29}];
 
     return ws;
 };
