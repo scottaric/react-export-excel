@@ -71,14 +71,19 @@ const excelSheetFromDataSet = (dataSet) => {
                 }
             }
         }
+
+        if (dataSetItem.columnwidths) {
+            ws['!cols'] = dataSetItem.columnwidths.map((width) => {
+                return {
+                    wch: width
+                }
+            });
+        }
     });
 
     if (range.s.c < 10000000) {
         ws['!ref'] = XLSX.utils.encode_range(range);
     }
-
-    // TODO: This should be in the columns, not here
-    ws['!cols'] = [{wch: 18},{wch: 25},{wch: 21.14},{wch: 12.71},{wch: 12.71},{wch: 13.57},{wch: 12},{wch: 12.29}];
 
     return ws;
 };
@@ -183,9 +188,6 @@ const excelSheetFromAoA = (data) => {
     if (range.s.c < 10000000) {
         ws['!ref'] = XLSX.utils.encode_range(range);
     }
-
-    // TODO: This should be in the columns, not here
-    ws['!cols'] = [{wch: 18},{wch: 25},{wch: 21.14},{wch: 12.71},{wch: 12.71},{wch: 13.57},{wch: 12},{wch: 12.29}];
 
     return ws;
 };
