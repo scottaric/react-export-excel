@@ -116,16 +116,13 @@ function getCell(v, cellRef, ws) {
     } else if (typeof v === 'boolean') {
         cell.v = v;
         cell.t = 'b';
-    } else if (typeof v === 'string' && v.length > 4 && v.startsWith('=')) {
-        cell.f = v;
-        //cell.t = 'b';
     } else if (v instanceof Date) {
         cell.t = 'n';
         cell.z = _xlsx2.default.SSF._table[14];
         cell.v = dateToNumber(cell.v);
     } else if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') {
-        if (typeof v.value === 'string' && v.value.length > 4 && v.value.startsWith('=')) {
-            cell.f = v.value;
+        if (typeof v.value === 'string' && v.value.startsWith('=')) {
+            cell.f = v.value.slice(1);
             cell.t = 'n';
         }
         else {
