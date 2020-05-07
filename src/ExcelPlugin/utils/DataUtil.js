@@ -113,7 +113,13 @@ function getCell(v, cellRef, ws) {
         cell.z = XLSX.SSF._table[14];
         cell.v = dateToNumber(cell.v);
     } else if (typeof v === 'object') {
-        cell.v = v.value;
+        if (typeof v.value === 'string' && v.value.startsWith('=')) {
+            cell.f = v.value.slice(1);
+            cell.t = 'n';
+        }
+        else {
+            cell.v = v.value;
+        }
         cell.s = v.style;
         if (typeof v.value === 'number') cell.t = 'n';
     } else {
