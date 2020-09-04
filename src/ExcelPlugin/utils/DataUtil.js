@@ -73,13 +73,12 @@ const excelSheetFromDataSet = (dataSet, orientation, scale) => {
         }
 
         if (orientation || scale) {
-            console.log('!pageSetup')
             ws['!pageSetup'] = {
                 scale: scale || '100',
                 orientation: orientation || 'portrait',
              };            
         }
-        
+
         if (dataSetItem.columnwidths) {
             ws['!cols'] = dataSetItem.columnwidths.map((width) => {
                 return {
