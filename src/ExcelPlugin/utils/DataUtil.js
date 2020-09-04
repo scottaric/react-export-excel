@@ -21,7 +21,7 @@ const dateToNumber = (v, date1904) => {
     return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
 };
 
-const excelSheetFromDataSet = (dataSet) => {
+const excelSheetFromDataSet = (dataSet, orientation, scale) => {
     /*
     Assuming the structure of dataset
     {
@@ -72,6 +72,14 @@ const excelSheetFromDataSet = (dataSet) => {
             }
         }
 
+        if (orientation || scale) {
+            console.log('!pageSetup')
+            ws['!pageSetup'] = {
+                scale: scale || '100',
+                orientation: orientation || 'portrait',
+             };            
+        }
+        
         if (dataSetItem.columnwidths) {
             ws['!cols'] = dataSetItem.columnwidths.map((width) => {
                 return {

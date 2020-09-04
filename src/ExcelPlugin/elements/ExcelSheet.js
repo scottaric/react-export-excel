@@ -7,6 +7,8 @@ export default class ExcelSheet extends React.Component {
         name: PropTypes.string.isRequired,
         data: PropTypes.arrayOf(PropTypes.object),
         dataSet: PropTypes.arrayOf(PropTypes.object),
+        scale: PropTypes.number,
+        orientation: PropTypes.string,
         value: PropTypes.oneOfType([
             PropTypes.array,
             PropTypes.func
